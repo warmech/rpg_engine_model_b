@@ -1,0 +1,5 @@
+function drawGraphicalLayer()
+	-- body
+
+end
+
