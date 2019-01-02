@@ -80,14 +80,32 @@ function buildTextbox(startX, startY, width, height)
     end
 
     --Declare file name for tileset image and declare the tile size
-    local tilesetFileName = "gfx/font/text_box.png"
-    local tilesize = 8
+    local tilesetFileName = UIGraphicsPath..textboxGraphicsPath..textboxTileset
+    local tilesize = textboxTilesize
+    
+    local metadata = 
+    {
+        id = (#textboxList + 1),
+        visible = false,
+        textboxX  = startX,
+        textboxY  = startY,
+        textboxWidth = width,   --width of the textbox in tiles
+        textboxHeight = height,   --height of the textbox in tiles
+        continueX = (textboxX + ((textboxWidth - 2) * tilesize)), --continue cursor will always be drawn at the second tile from the right on the bottom border of the text box
+        continueY = (textboxY + (textboxHeight * tilesize)),
+        textAreaMargin = tilesize + math.ceil(tilesize / 2), --text area bound to a (tilesize + (tilesize * 0.5)) pixel margin inside the textbox
+        textAreaX = textboxX + textAreaMargin,
+        textAreaY = textboxY + textAreaMargin,
+        textAreaWidth = ((textboxX + (width * tilesize) - textAreaMargin) - textAreaX),  --width of the text area in pixels
+        textAreaHeight = ((textboxY + (height + tilesize) - textAreaMargin) - textAreaY) --height of the text area in pixels
+    }
+    
 
     --Build tileset, sprite batch, and textbox object
     local tileset, tilesetFile = buildTileset(tilesetFileName, tilesize)
     local textboxTable = buildTextboxTable(width, height)
     local boxLayer = buildSpriteBatch(tileset, tilesetFile, textboxTable, tilesize)
-    local textbox = {tileset = tileset, boxLayer = boxLayer, startX = startX, startY = startY}
+    local textbox = {tileset = tileset, boxLayer = boxLayer, metadata = metadata}
 
     return textbox
 end
@@ -102,19 +120,27 @@ function advanceText(deltaTime)
     end
 end
 
-function buildTextArea()
-    -- body
-
+function buildTextArea(text, width, height)
+    maxWidth, textTable = love.graphics.getFont():getWrap(text, width)
+    
 end
 
 function drawText()
-    love.graphics.scale(3)
+    --love.graphics.scale(3)
     local textSegment = text.object:sub(1, text.metadata.iterator)
     love.graphics.print(textSegment, 10, 10)
 end
 
-function loadTextObject()
-    width, wrappedtext = love.graphics.getFont():getWrap( "This is a test of the font wrapping detection system in LOVE.", 100 )
+function loadTextObject(text, xPos, yPos, width, height)
+    if width == nil then
+        width = defaultTextboxWidth
+        local x = buildTextArea(text, textbox.metadata.textAreaWidth, textbox.metadata.textAreaHeight)
+    end
+    
+    local textbox = buildTextbox(xPos, yPos, width, height)
+    local x = buildTextArea(text, textbox.metadata.textAreaWidth, textbox.metadata.textAreaHeight)
+
+    
 end
 
 
@@ -127,8 +153,11 @@ end
 
 
 
+function selectFont(fontPath, fontName, fontDefinition)
+    local font = love.graphics.newImageFont(fontPath..fontName,fontDefinition)
+    love.graphics.setFont(font)
+end
 
-
-
-
-
+function handleText()
+    --This function is called every update cycle and manages all text-based UI components
+end

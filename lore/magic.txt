@@ -1,0 +1,25 @@
+Magic & Spellcasting
+-----------------------------
+
+The use of magic is not reliant upon a store of magic or "mana" points. Rather, magic spells rely upon invocations utilised by a player character as they progress in level. As a PC levels up, they become more capable of understanding how particular invocations work and are thus able to cast said spells/invocations easier. This is not to say that a low level character cannot cast a high level spell; rather, they can - however, the time required to complete the invocation successfully takes longer (more turns). A spell that requires a very high level of understanding (high magic level) that is cast by a very low level PC may not even be cast by the time combat has ended. Conversely, a very low level spell cast by a very high level PC will likely occur instantly.
+
+The use of magic does not revolve around simple spells with associated levels; rather, magic is reliant upon the character's understanding of antique, epic prose which is supernatural in origin. The prose is composed of various families of couplets, with each family representing some aspect of creation, and each progressive couplet representing a more powerful aspect of that family's magical nature. A tabular, hypothetical representation of this might resemble the following:
+
+Fire Magic Family of Prose
+-----------------------------
+Couplet A, Line 1 --- Weak offensive fire spell
+Couplet A, Line 2 --- Weak defensive fire spell
+
+Couplet B, Line 1 --- Moderate offensive fire spell
+Couplet B, Line 2 --- Moderate defensive fire spell
+
+Couplet C, Line 1 --- Strong offensive fire spell
+Couplet C, Line 2 --- Strong defensive fire spell
+
+Couplet D, Line 1 --- Powerful offensive fire spell
+Couplet D, Line 2 --- Powerful defensive fire spell
+
+Couplet E, Line 1 --- Ultimate offensive fire spell
+Couplet E, Line 2 --- Ultimate defensive fire spell
+
+With each progressive couplet, a higher level of magical aptitude is required to understand and perform its corresponding invocation in a timely fashion. A low level player, however, given enough defensive (and likely curative) measures and a long enough span of time during combat, could theoretically cast the highest tier of spell in a family of prose if they were to somehow ascertain the means of accessing said magical spell.

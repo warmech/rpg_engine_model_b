@@ -1,11 +1,9 @@
 require "src/init_engine"
-require "src/font_handler"
 require "src/text_handler"
 
 function love.load()
     initGraphics()
-
-    initText()
+    initUI()
 
     text = 
     {
@@ -15,19 +13,16 @@ function love.load()
             iterator = 1,
             speed = .05
         },
-        object = "Hello World!"
+        object = "Hello World! This is a test of the text wrapper."
     }
 
-    love.window.setMode(768, 432)
+    love.window.setMode(800, 600)
 
     love.graphics.setBackgroundColor( 1, 1, 1 )
     
-    textbox = buildTextbox(144, 240, 18, 8)
+    --textbox = buildTextbox(100, 100, 18, 8)
+    --buildTextArea(text.object, 120, 48)
 end
-
-
-
-
 
 function love.keypressed(key)
     if key == "escape" then
@@ -36,21 +31,20 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    advanceText(dt)
-
+    --advanceText(dt)
+    handleText()
 end
 
 function love.draw()
-    --[[
+--[[
     love.graphics.draw(
         textbox.boxLayer,
         textbox.startX,
         textbox.startY,
-        0, 
-        3, 
-        3
-    )]]
-    drawText()
+        0
+    )
+    --drawText()
+    ]]
 end
 
 
