@@ -105,7 +105,7 @@ function handleText() --This function is called every update cycle and manages a
     love.graphics.setColor(textColor)
     for i = 1, (#textObjectList) do
         for j = 1, (#textObjectList[i]) do
-            love.graphics.print(textObjectList[i][j].text, textObjectList[i].x, textObjectList[i].y)
+            love.graphics.print(textObjectList[i][j].text, textObjectList[i][j].x, textObjectList[i][j].y)
             --print(textObjectList[i][j].text)
         end
         --love.graphics.print(textObjectList[i].text, textObjectList[i].x, textObjectList[i].y)
