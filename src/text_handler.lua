@@ -1,119 +1,43 @@
-function buildTextbox(startX, startY, width, height)
-
-    local function buildTileset(fileName, tilesize)
-        --Create quad table and import the appropriate tileset file
-        local tileset = {}
-        local tilesetFile = love.graphics.newImage(fileName)
-        --This filter is configurable based upon game settings, but should probably be locked to nearest/nearest
-        local filter_min = "nearest"
-        local filter_mag = "nearest"
-        tilesetFile:setFilter(filter_min, filter_mag)
-        local tilesetQuadIndex = 1
-        --Iterate down the tileset's rows by multiples of tilesize pixels (16 is default)
-        for y = 1, (tilesetFile:getHeight() / tilesize) do
-            --Iterate across the tileset's columns by multiples of tilesize pixels (16 is default)
-            for x = 1, (tilesetFile:getWidth() / tilesize) do
-                --Read the (tilesize * tilesize) pixel group at ((x - 1) * tilesize), ((y - 1) * tilesize) into a new quad
-                tileset[tilesetQuadIndex] = love.graphics.newQuad(((x - 1) * tilesize), ((y - 1) * tilesize), tilesize, tilesize, tilesetFile:getWidth(), tilesetFile:getHeight())
-                tilesetQuadIndex = tilesetQuadIndex + 1
-            end
-        end
-        return tileset, tilesetFile
-    end
-
-    local function buildSpriteBatch(tileset, tilesetFile, textboxTable, tilesize)
-        --Create a new sprite batch the size fo the textbox with the tileset file
-        local tilesetSpriteBatch = love.graphics.newSpriteBatch(tilesetFile, width * height)
-        --Clear out the textbox canvas
-        tilesetSpriteBatch:clear()
-        --Iterate down the rows of the textbox
-        for y = 0, (height - 1) do
-            --Iterate across the columns of the textbox
-            for x = 0, (width - 1) do
-                --Write the appropriate tile to the current cell in the sprite batch
-                tilesetSpriteBatch:add(tileset[(textboxTable[y + 1][x + 1])], x * tilesize, y * tilesize)
-            end
-        end
-        --Send data to GPU
-        tilesetSpriteBatch:flush()
-        return tilesetSpriteBatch
-    end
-
-    local function buildTextboxTable(width, height)
-        --Build textbox table and populate borders and body with corresponding tile IDs
-        local textboxTable = {}
-        for y = 1, height do
-            textboxTable[y] = {}
-            for x = 1, width do
-                if (y == 1 and x == 1) then
-                    --Upper-Left Corner
-                    textboxTable[y][x] = 1
-                elseif (y == 1 and x > 1 and x < width) then
-                    --Upper Border
-                    textboxTable[y][x] = 6
-                elseif (y == 1 and x == width) then
-                    --Upper-Right Corner
-                    textboxTable[y][x] = 2
-                elseif (y > 1 and y < height and x == 1) then
-                    --Left Border
-                    textboxTable[y][x] = 7
-                elseif (y > 1 and y < height and x > 1 and x < width) then
-                    --Whitespace
-                    textboxTable[y][x] = 9
-                elseif (y > 1 and y < height and x == width) then
-                    --Right Border
-                    textboxTable[y][x] = 5
-                elseif (y == height and x == 1) then
-                    --Lower-Left Corner
-                    textboxTable[y][x] = 3
-                elseif (y == height and x > 1 and x < width) then
-                    --Lower Border
-                    textboxTable[y][x] = 8
-                elseif (y == height and x == width) then
-                    --Lower-Right Corner
-                    textboxTable[y][x] = 4
-                end
-            end
-        end
-
-        return textboxTable
-    end
-
-    --Declare file name for tileset image and declare the tile size
-    local tilesetFileName = UIGraphicsPath..textboxGraphicsPath..textboxTileset
-    local tilesize = textboxTilesize
-    
-    local metadata = 
+function buildTextbox(xPos, yPos, width, height, objectID)
+    local textbox = 
     {
-        id = (#textboxList + 1),
-        visible = false,
-        textboxX  = startX,
-        textboxY  = startY,
-        textboxWidth = width,   --width of the textbox in tiles
-        textboxHeight = height,   --height of the textbox in tiles
-        continueX = (textboxX + ((textboxWidth - 2) * tilesize)), --continue cursor will always be drawn at the second tile from the right on the bottom border of the text box
-        continueY = (textboxY + (textboxHeight * tilesize)),
-        textAreaMargin = tilesize + math.ceil(tilesize / 2), --text area bound to a (tilesize + (tilesize * 0.5)) pixel margin inside the textbox
-        textAreaX = textboxX + textAreaMargin,
-        textAreaY = textboxY + textAreaMargin,
-        textAreaWidth = ((textboxX + (width * tilesize) - textAreaMargin) - textAreaX),  --width of the text area in pixels
-        textAreaHeight = ((textboxY + (height + tilesize) - textAreaMargin) - textAreaY) --height of the text area in pixels
+        id = objectID,
+        visible = true,
+        border = 
+        {
+            drawMode = "fill",
+            x = xPos,
+            y = yPos,
+            w = width,
+            h = height,
+            r = textboxCornerRadius,
+            s = textboxCornerSegments,
+            c = textboxBorderColor
+        },
+        body = 
+        {
+            drawMode = "fill",
+            x = (xPos + 1),
+            y = (yPos + 1),
+            w = (width - 2),
+            h = (height - 2),
+            r = textboxCornerRadius,
+            s = textboxCornerSegments,
+            c = textboxBodyColor
+        }
     }
-    
-
-    --Build tileset, sprite batch, and textbox object
-    local tileset, tilesetFile = buildTileset(tilesetFileName, tilesize)
-    local textboxTable = buildTextboxTable(width, height)
-    local boxLayer = buildSpriteBatch(tileset, tilesetFile, textboxTable, tilesize)
-    local textbox = {tileset = tileset, boxLayer = boxLayer, metadata = metadata}
-
     return textbox
 end
 
-function buildSimpleTextbox(xPos, yPos, width, height)
-	
-
-    return textbox
+function drawTextbox(textbox)
+    if textbox.visible == true then
+        --Draw the textbox border
+        love.graphics.setColor(textbox.border.c)
+        love.graphics.rectangle(textbox.border.drawMode, textbox.border.x, textbox.border.y, textbox.border.w, textbox.border.h, textbox.border.r, textbox.border.r, textbox.border.s)
+        --Draw the textbox body
+        love.graphics.setColor(textbox.body.c)
+        love.graphics.rectangle(textbox.body.drawMode, textbox.body.x, textbox.body.y, textbox.body.w, textbox.body.h, textbox.body.r, textbox.body.r, textbox.body.s)
+    end
 end
 
 function advanceText(deltaTime)
@@ -126,44 +50,67 @@ function advanceText(deltaTime)
     end
 end
 
-function buildTextArea(text, width, height)
-    maxWidth, textTable = love.graphics.getFont():getWrap(text, width)
-    
+function buildTextArea(text, xInit, yInit)
+    local maxWidth, textTable = love.graphics.getFont():getWrap(text, textAreaDefaultMaxWidth)
+    local newTextObject = {}
+    --print(#textTable)
+    for i = 1, (#textTable) do
+        
+        --print(textTable[i])
+        --print(obj[1])
+        table.insert(newTextObject, {
+            text = textTable[i],
+            x = (xInit + (textboxCornerRadius * 2)),
+            y = (yInit + (textboxCornerRadius * 2)) + ((i - 1) * (fontMaxHeight + lineSpacing))
+        })
+        --print(newTextObject[i].text)
+    end
+
+    return newTextObject
 end
 
 function drawText()
-    --love.graphics.scale(3)
     local textSegment = text.object:sub(1, text.metadata.iterator)
     love.graphics.print(textSegment, 10, 10)
 end
 
-function loadTextObject(text, xPos, yPos, width, height)
-    if width == nil then
-        width = defaultTextboxWidth
-        local x = buildTextArea(text, textbox.metadata.textAreaWidth, textbox.metadata.textAreaHeight)
-    end
+function loadTextObject(textObject)
+    --Generate a unique serial number to bind the text object to its corresonding textbox
+    local id = uniqueSerialInt()
+    --Determine how many rows the textbox will require
+    local textArea = buildTextArea(textObject.text, textObject.x, textObject.y)
+    local textbox = buildTextbox(textObject.x, textObject.y, 150, 50, id)
     
-    local textbox = buildTextbox(xPos, yPos, width, height)
-    local x = buildTextArea(text, textbox.metadata.textAreaWidth, textbox.metadata.textAreaHeight)
-
+    --print(textArea[1].text)
     
+    table.insert(textObjectList, textArea)
+    table.insert(textboxList, textbox)
 end
 
-
-
-
-
-
-
-
-
-
-
-function selectFont(fontPath, fontName, fontDefinition)
+function selectFont(fontPath, fontName, fontDefinition, fontHeight)
     local font = love.graphics.newImageFont(fontPath..fontName,fontDefinition)
     love.graphics.setFont(font)
+    fontMaxHeight = fontHeight
 end
 
-function handleText()
-    --This function is called every update cycle and manages all text-based UI components
+
+function handleText() --This function is called every update cycle and manages all text-based UI components
+    --This sets the draw target to the canvas
+    love.graphics.setCanvas(canvas)
+    --Cycle through the textbox table and draw each box
+    for i = 1, (#textboxList) do
+        drawTextbox(textboxList[i])
+    end
+
+    love.graphics.setColor(textColor)
+    for i = 1, (#textObjectList) do
+        for j = 1, (#textObjectList[i]) do
+            love.graphics.print(textObjectList[i][j].text, textObjectList[i].x, textObjectList[i].y)
+            --print(textObjectList[i][j].text)
+        end
+        --love.graphics.print(textObjectList[i].text, textObjectList[i].x, textObjectList[i].y)
+    end
+
+    --This sets the draw target to the canvas
+    love.graphics.setCanvas()
 end

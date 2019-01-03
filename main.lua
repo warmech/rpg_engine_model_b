@@ -1,27 +1,29 @@
 require "src/init_engine"
 require "src/text_handler"
+require "src/system_handler"
 
 function love.load()
     initGraphics()
     initUI()
-
-    text = 
-    {
-        metadata = 
-        {
-            timer = 0,
-            iterator = 1,
-            speed = .05
-        },
-        object = "Hello World! This is a test of the text wrapper."
-    }
-
-    love.window.setMode(800, 600)
-
-    love.graphics.setBackgroundColor( 0, 0, 0 )
     
-    --textbox = buildTextbox(100, 100, 18, 8)
-    --buildTextArea(text.object, 120, 48)
+    --[[
+    local box1 = buildTextbox(10, 10, 100, 25)
+    local box2 = buildTextbox(112, 92, 38, 19)
+    local box3 = buildTextbox(250, 200, 50, 20)
+
+    table.insert(textboxList, box1)
+    table.insert(textboxList, box2)
+    table.insert(textboxList, box3)
+    ]]
+    
+    textObj1 = 
+    {
+        text = "The warm glow of the CRT dimly illuminates your surroundings...",
+        x = 20,
+        y = 20
+    }
+    
+    loadTextObject(textObj1)
 end
 
 function love.keypressed(key)
@@ -31,28 +33,15 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    --advanceText(dt)
-    --handleText()
+    handleText()
 end
 
 function love.draw()
-	love.graphics.setColor(0, 0, 1)
-	love.graphics.rectangle( "fill", 20, 20, 200, 50, 2, 2, 1)
-	love.graphics.setColor(1, 1, 1)
-	love.graphics.rectangle( "line", 20, 20, 200, 50, 1, 1, 1)
-
---[[
-    love.graphics.draw(
-        textbox.boxLayer,
-        textbox.startX,
-        textbox.startY,
-        0
-    )
-    --drawText()
-    ]]
+    --love.graphics.setCanvas(canvas) --This sets the draw target to the canvas
+    --love.graphics.setCanvas() --This sets the target back to the screen
+    love.graphics.setColor(1, 1, 1, 1) --Has to be set to white or glitchiness ensues
+    love.graphics.draw(canvas, 0, 0, 0, 4, 4)
 end
-
-
 
 
 
