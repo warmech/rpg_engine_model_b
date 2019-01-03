@@ -18,7 +18,7 @@ function love.load()
 
     love.window.setMode(800, 600)
 
-    love.graphics.setBackgroundColor( 1, 1, 1 )
+    love.graphics.setBackgroundColor( 0, 0, 0 )
     
     --textbox = buildTextbox(100, 100, 18, 8)
     --buildTextArea(text.object, 120, 48)
@@ -32,10 +32,15 @@ end
 
 function love.update(dt)
     --advanceText(dt)
-    handleText()
+    --handleText()
 end
 
 function love.draw()
+	love.graphics.setColor(0, 0, 1)
+	love.graphics.rectangle( "fill", 20, 20, 200, 50, 2, 2, 1)
+	love.graphics.setColor(1, 1, 1)
+	love.graphics.rectangle( "line", 20, 20, 200, 50, 1, 1, 1)
+
 --[[
     love.graphics.draw(
         textbox.boxLayer,
@@ -46,10 +51,6 @@ function love.draw()
     --drawText()
     ]]
 end
-
-
-
-
 
 
 

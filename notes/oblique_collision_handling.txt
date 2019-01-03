@@ -1,0 +1,31 @@
+When you do normal movement, it’s probably something like this:
+if ( placeFree(xto, yto) ) {
+     x = xto;
+     y = yto;
+}
+Where x and y are the player’s coordinates and xto and yto are the coordinates you want to move to. placeFree(x,y) is a function to test if the position (x,y) is able to be moved to. You first check if the place you want to move to is free (ie. there are no walls, NPCs, or other obstructions there) and then you move there if it is free.
+
+But what if it isn’t? This is where you can make your player move along diagonal walls.
+if ( placeFree(xto, yto) ) { // move normally
+     x = xto;
+     y = yto;
+} else { // now let's check if we can move left/right one pixel and up/down
+     if ( placeFree(x + 1, yto) ) { // check right
+          x = x + 1;
+          y = yto;
+     } else if ( placeFree(x - 1, yto) ) { // check left
+          x = x - 1;
+          y = yto;
+     } else if ( placeFree(xto, y - 1) ) { // check up
+          x = xto;
+          y = y - 1;
+     } else if ( placeFree(xto, y + 1) ) { // check down
+          x = xto;
+          y = y + 1;
+     }
+}
+So what happens now is, if there is a free place, move to it normally, but if it’s blocked, check if the player can move ‘around’ it and if so, do so. This should allow the player to slide along diagonal walls a la Earthbound.
+
+Of course, this is all psuedocode and is untested so you may need to adjust it to fit your system. It also assumes the diagonal walls are 45 degrees.
+
+THEDAVE - forum.starmen.net

@@ -110,6 +110,12 @@ function buildTextbox(startX, startY, width, height)
     return textbox
 end
 
+function buildSimpleTextbox(xPos, yPos, width, height)
+	
+
+    return textbox
+end
+
 function advanceText(deltaTime)
     --Update text timer
     text.metadata.timer = text.metadata.timer + deltaTime

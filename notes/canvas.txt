@@ -1,0 +1,32 @@
+function love.load()
+	love.window.setMode(640, 480)
+	
+	canvas = love.graphics.newCanvas(320,240)
+	canvas:setFilter("nearest", "nearest")
+
+	love.graphics.setBackgroundColor( 0, 0, 0 )
+end
+
+function love.keypressed(key)
+	if key == "escape" then
+		love.event.push("quit")
+	end
+end
+
+function love.update(dt)
+
+end
+
+function love.draw()
+	love.graphics.setCanvas(canvas) --This sets the draw target to the canvas
+	--DRAW EVERYTHING
+	love.graphics.setColor(1, 1, 1)
+	love.graphics.rectangle("fill", 19, 19, 102, 52, 2, 2, 1)
+	
+	love.graphics.setColor(0, 0, 1)
+	love.graphics.rectangle("fill", 20, 20, 100, 50, 2, 2, 1)
+	
+	love.graphics.setCanvas() --This sets the target back to the screen
+	love.graphics.setColor(1, 1, 1, 1) --Has to be set to white or glitchiness ensues
+	love.graphics.draw(canvas, 0, 0, 0, 2, 2)
+end
