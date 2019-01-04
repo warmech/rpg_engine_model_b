@@ -5,6 +5,7 @@ require "src/system_handler"
 function love.load()
     initGraphics()
     initUI()
+    initTestUI()
     
     --[[
     local box1 = buildTextbox(10, 10, 100, 25)
@@ -14,7 +15,7 @@ function love.load()
     table.insert(textboxList, box1)
     table.insert(textboxList, box2)
     table.insert(textboxList, box3)
-    ]]
+    
     
     textObj1 = 
     {
@@ -24,6 +25,7 @@ function love.load()
     }
     
     loadTextObject(textObj1)
+    ]]
 end
 
 function love.keypressed(key)
@@ -33,8 +35,17 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    handleText()
+    --handleText()
+    drawPrimaryTextbox()
 end
+
+
+
+
+
+
+
+
 
 function love.draw()
     --love.graphics.setCanvas(canvas) --This sets the draw target to the canvas

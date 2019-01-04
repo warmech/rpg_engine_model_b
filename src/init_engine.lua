@@ -60,3 +60,69 @@ function initUI()
 	textboxBodyColor = color.blue
 	textColor = color.white
 end
+
+function initTestUI()
+	--Define static textbox properties - this is where dialogue, story, etc. is printed
+	textboxParams = 
+	{
+		narration = 
+		{
+			visible = false,
+			drawMode = "fill",
+			borderX = 80,
+			borderY = 202,
+			borderW = 160,
+			borderH = 38,
+			borderR = 2,
+			borderS = 1,
+			borderC = color.white,
+			bodyX = (narration.borderX + 1),
+			bodyY = (textboxParams.narration.borderY + 1),
+			bodyW = (textboxParams.narration.borderW - 2),
+			bodyH = (textboxParams.narration.borderH - 2),
+			bodyR = 2,
+			bodyS = 1,
+			bodyC = color.blue
+		},
+		--[[
+		dialogue = 
+		{
+			visible = false,
+			drawMode = "fill",
+			borderX = 40,
+			borderY = 202,
+			borderW = 240,
+			borderH = 38,
+			borderR = 2,
+			borderS = 1,
+			borderC = color.white,
+			bodyX = (borderX + 1),
+			bodyY = (borderY + 1),
+			bodyW = (borderW - 2),
+			bodyH = (borderH - 2),
+			bodyR = 2,
+			bodyS = 1,
+			bodyC = color.blue,
+		},
+		]]
+		notification = 
+		{
+			visible = false,
+			drawMode = "fill",
+			borderX = 80,
+			borderY = 112,
+			borderW = 160,
+			borderH = 16,
+			borderR = 2,
+			borderS = 1,
+			borderC = color.white,
+			bodyX = (textboxParams.notification.borderX + 1),
+			bodyY = (textboxParams.notification.borderY + 1),
+			bodyW = (textboxParams.notification.borderW - 2),
+			bodyH = (textboxParams.notification.borderH - 2),
+			bodyR = 2,
+			bodyS = 1,
+			bodyC = color.blue
+		}
+	}
+end

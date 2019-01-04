@@ -29,6 +29,24 @@ function buildTextbox(xPos, yPos, width, height, objectID)
     return textbox
 end
 
+function buildStaticTextbox()
+     
+end
+
+function drawPrimaryTextbox()
+    if primaryTextbox.visible == true then
+        love.graphics.setCanvas(canvas)
+        --Draw the textbox border textboxParams.narration.
+        love.graphics.setColor(textboxParams.narration.borderC)
+        love.graphics.rectangle(textboxParams.narration.drawMode, textboxParams.narration.borderX, textboxParams.narration.borderY, textboxParams.narration.borderW, textboxParams.narration.borderH, textboxParams.narration.borderR, textboxParams.narration.borderR, textboxParams.narration.borderS)
+        love.graphics.setColor(textboxParams.narration.bodyC)
+        love.graphics.rectangle(textboxParams.narration.drawMode, textboxParams.narration.bodyX, textboxParams.narration.bodyY, textboxParams.narration.bodyW, textboxParams.narration.bodyH, textboxParams.narration.bodyR, textboxParams.narration.bodyR, textboxParams.narration.bodyS)
+        love.graphics.setCanvas()
+    end
+end
+
+
+
 function drawTextbox(textbox)
     if textbox.visible == true then
         --Draw the textbox border
@@ -40,6 +58,24 @@ function drawTextbox(textbox)
     end
 end
 
+function eraseTextbox(id)
+    for i = 1, (#textboxList) do
+        if (textboxList[i].id == id) then
+            table.remove(textboxList, textboxList[i])
+        end
+    end
+end
+
+function drawText()
+    local textSegment = text.object:sub(1, text.metadata.iterator)
+    love.graphics.print(textSegment, 10, 10)
+end
+
+function eraseText()
+
+end
+
+
 function advanceText(deltaTime)
     --Update text timer
     text.metadata.timer = text.metadata.timer + deltaTime
@@ -48,6 +84,12 @@ function advanceText(deltaTime)
         text.metadata.iterator = text.metadata.iterator + 1
         text.metadata.timer = 0
     end
+end
+
+function selectFont(fontPath, fontName, fontDefinition, fontHeight)
+    local font = love.graphics.newImageFont(fontPath..fontName,fontDefinition)
+    love.graphics.setFont(font)
+    fontMaxHeight = fontHeight
 end
 
 function buildTextArea(text, xInit, yInit)
@@ -69,10 +111,7 @@ function buildTextArea(text, xInit, yInit)
     return newTextObject
 end
 
-function drawText()
-    local textSegment = text.object:sub(1, text.metadata.iterator)
-    love.graphics.print(textSegment, 10, 10)
-end
+
 
 function loadTextObject(textObject)
     --Generate a unique serial number to bind the text object to its corresonding textbox
@@ -87,13 +126,6 @@ function loadTextObject(textObject)
     table.insert(textboxList, textbox)
 end
 
-function selectFont(fontPath, fontName, fontDefinition, fontHeight)
-    local font = love.graphics.newImageFont(fontPath..fontName,fontDefinition)
-    love.graphics.setFont(font)
-    fontMaxHeight = fontHeight
-end
-
-
 function handleText() --This function is called every update cycle and manages all text-based UI components
     --This sets the draw target to the canvas
     love.graphics.setCanvas(canvas)
@@ -101,6 +133,7 @@ function handleText() --This function is called every update cycle and manages a
     for i = 1, (#textboxList) do
         drawTextbox(textboxList[i])
     end
+
 
     love.graphics.setColor(textColor)
     for i = 1, (#textObjectList) do
@@ -110,7 +143,6 @@ function handleText() --This function is called every update cycle and manages a
         end
         --love.graphics.print(textObjectList[i].text, textObjectList[i].x, textObjectList[i].y)
     end
-
     --This sets the draw target to the canvas
     love.graphics.setCanvas()
 end
