@@ -1,64 +1,48 @@
-function buildTextbox(xPos, yPos, width, height, objectID)
+function buildTextbox(xPos, yPos, width, height, id)
     local textbox = 
     {
-        id = objectID,
-        visible = true,
+        id = id,
+        visible = false,
         border = 
         {
-            drawMode = "fill",
             x = xPos,
             y = yPos,
             w = width,
-            h = height,
-            r = textboxCornerRadius,
-            s = textboxCornerSegments,
-            c = textboxBorderColor
+            h = height
         },
         body = 
         {
-            drawMode = "fill",
             x = (xPos + 1),
             y = (yPos + 1),
             w = (width - 2),
-            h = (height - 2),
-            r = textboxCornerRadius,
-            s = textboxCornerSegments,
-            c = textboxBodyColor
+            h = (height - 2)
         }
     }
     return textbox
 end
 
-function buildStaticTextbox()
-     
-end
-
-function drawPrimaryTextbox()
-    if primaryTextbox.visible == true then
-        love.graphics.setCanvas(canvas)
-        --Draw the textbox border textboxParams.narration.
-        love.graphics.setColor(textboxParams.narration.borderC)
-        love.graphics.rectangle(textboxParams.narration.drawMode, textboxParams.narration.borderX, textboxParams.narration.borderY, textboxParams.narration.borderW, textboxParams.narration.borderH, textboxParams.narration.borderR, textboxParams.narration.borderR, textboxParams.narration.borderS)
-        love.graphics.setColor(textboxParams.narration.bodyC)
-        love.graphics.rectangle(textboxParams.narration.drawMode, textboxParams.narration.bodyX, textboxParams.narration.bodyY, textboxParams.narration.bodyW, textboxParams.narration.bodyH, textboxParams.narration.bodyR, textboxParams.narration.bodyR, textboxParams.narration.bodyS)
-        love.graphics.setCanvas()
-    end
-end
-
-
-
 function drawTextbox(textbox)
     if textbox.visible == true then
+		love.graphics.setCanvas(canvas)
         --Draw the textbox border
-        love.graphics.setColor(textbox.border.c)
-        love.graphics.rectangle(textbox.border.drawMode, textbox.border.x, textbox.border.y, textbox.border.w, textbox.border.h, textbox.border.r, textbox.border.r, textbox.border.s)
+        love.graphics.setColor(textboxBorderColor)
+        love.graphics.rectangle(textboxDrawMode, textbox.border.x, textbox.border.y, textbox.border.w, textbox.border.h, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
         --Draw the textbox body
-        love.graphics.setColor(textbox.body.c)
-        love.graphics.rectangle(textbox.body.drawMode, textbox.body.x, textbox.body.y, textbox.body.w, textbox.body.h, textbox.body.r, textbox.body.r, textbox.body.s)
+        love.graphics.setColor(textboxBodyColor)
+        love.graphics.rectangle(textboxDrawMode, textbox.body.x, textbox.body.y, textbox.body.w, textbox.body.h, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
+		love.graphics.setCanvas()
     end
 end
 
 function eraseTextbox(id)
+    for i = 1, (#textboxList) do
+        if (textboxList[i].id == id) then
+            textboxList[i].visible = false
+        end
+    end
+end
+
+function deleteTextbox(id)
     for i = 1, (#textboxList) do
         if (textboxList[i].id == id) then
             table.remove(textboxList, textboxList[i])
@@ -110,8 +94,6 @@ function buildTextArea(text, xInit, yInit)
 
     return newTextObject
 end
-
-
 
 function loadTextObject(textObject)
     --Generate a unique serial number to bind the text object to its corresonding textbox

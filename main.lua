@@ -1,31 +1,17 @@
 require "src/init_engine"
 require "src/text_handler"
 require "src/system_handler"
+require "src/input_handler"
+
+function love.conf(t)
+		t.console = true
+	end
+
 
 function love.load()
     initGraphics()
     initUI()
     initTestUI()
-    
-    --[[
-    local box1 = buildTextbox(10, 10, 100, 25)
-    local box2 = buildTextbox(112, 92, 38, 19)
-    local box3 = buildTextbox(250, 200, 50, 20)
-
-    table.insert(textboxList, box1)
-    table.insert(textboxList, box2)
-    table.insert(textboxList, box3)
-    
-    
-    textObj1 = 
-    {
-        text = "The warm glow of the CRT dimly illuminates your surroundings...",
-        x = 20,
-        y = 20
-    }
-    
-    loadTextObject(textObj1)
-    ]]
 end
 
 function love.keypressed(key)
@@ -36,7 +22,6 @@ end
 
 function love.update(dt)
     --handleText()
-    drawPrimaryTextbox()
 end
 
 
