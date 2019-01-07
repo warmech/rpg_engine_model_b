@@ -40,19 +40,25 @@ function initUI()
 	fontPath = "fonts/"
 	fontTable = 
 	{
-		{"text_std_vwf_main.png"," ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!,.", 8},
-		{"text_inv_vwf.png"," ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}:;,.?/<>~\"\'\\", 8}
+		chunky = 
+		{
+			name = "text_std_vwf_main.png",
+			definition = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!,.",
+			height = 8
+		},
+		mother = 
+		{
+			name = "text_inv_vwf.png",
+			definition = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}:;,.?/<>~\"\'\\",
+			height = 8
+		}
 	}
-	fontMaxHeight = 8 --Default is eight; set for a font by the selectFont function once called
-	selectFont(UIGraphicsPath..fontPath, fontTable[2][1], fontTable[2][2], fontTable[2][3])
-	--Initialize the textbox and text object tables
-	textboxList = {}
+	selectFont(UIGraphicsPath..fontPath, fontTable.mother.name, fontTable.mother.definition, fontTable.mother.height)
+	--Initialize the text object table
 	textObjectList = {}
-	--Define text settings
+	--Define textbox settings
 	textboxDrawMode = "fill"
-	textAreaDefaultMaxWidth = 128 --Measured in pixels
-	textAreaMarginX = 2 --Measured in pixels
-	textAreaMarginY = 2 --Measured in pixels
+	textAreaMargin = 4 --Measured in pixels	
 	lineSpacing = 2 --Measured in pixels
 	texboxBorderSize = 2 --Measured in pixels
 	textboxCornerRadius = 2 --Measured in pixels
@@ -60,6 +66,9 @@ function initUI()
 	textboxBorderColor = color.white
 	textboxBodyColor = color.blue
 	textColor = color.white
+	--Define text processing settings
+	textTimePassed = 0
+	textTimePerLetter = 0.05
 	--Define static textbox properties - this is where dialogue, story, etc. is printed
 	textboxParams = 
 	{
@@ -68,22 +77,26 @@ function initUI()
 			xPos = 80,
 			yPos = 202,
 			width = 160,
-			height = 38
+			height = 38,
+			maxLines = 3
 		},
 		dialogue = 
 		{
 			xPos = 40,
 			yPos = 202,
 			width = 240,
-			height = 38
+			height = 38,
+			maxLines = 2
 		},
 		notification = 
 		{
 			xPos = 80,
 			yPos = 112,
 			width = 160,
-			height = 16
+			height = 16,
+			maxLines = 1
 		}
 	}
+
 end
 

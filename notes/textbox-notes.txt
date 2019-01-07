@@ -1,3 +1,25 @@
 https://retrorpgs.wordpress.com/2014/12/31/creating-a-textbox-part-1/
 
 https://retrorpgs.wordpress.com/2015/01/05/creating-a-textbox-part-2/
+
+--[[
+function drawText()
+	local textSegment = text.object:sub(1, text.metadata.iterator)
+	love.graphics.print(textSegment, 10, 10)
+end
+
+function eraseText()
+
+end
+
+
+function advanceText(deltaTime)
+	--Update text timer
+	text.metadata.timer = text.metadata.timer + deltaTime
+	--If the timer matches the speed setting, increase the iterator and reset the timer
+	if text.metadata.timer > text.metadata.speed then
+		text.metadata.iterator = text.metadata.iterator + 1
+		text.metadata.timer = 0
+	end
+end
+]]
