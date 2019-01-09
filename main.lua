@@ -10,9 +10,9 @@ function love.load()
     text = "Hello World! This is a test... Did it work? Maybe. Who knows? I just want this to work; if it does, yay!"
     textboxType = "narration"
     xPos, yPos = 0, 0
-    loadTextObject(text, textboxType, xPos, yPos)
+    --loadTextObject(text, textboxType, xPos, yPos)
     blinkTimePassed = 0
-    blinkTimeLimit = 0.5
+    blinkTimeLimit = 0.25
     
     
 end
@@ -24,7 +24,7 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
-    handleText()
+    --handleText()
     --textboxInputDetect()
     blinkTimePassed = blinkTimePassed + dt
     if (blinkTimePassed >= blinkTimeLimit) then
