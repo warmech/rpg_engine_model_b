@@ -2,32 +2,11 @@ require "src/init_engine"
 require "src/text_handler"
 require "src/system_handler"
 require "src/input_handler"
+require "src/ui_handler"
 
 function love.conf(t)
 	t.console = true
 end
-
-function drawAlertBox(textbox)
-    local borderX	= textbox.border.x
-    local borderY	= textbox.border.y
-    local borderW	= textbox.border.w
-    local borderH	= textbox.border.h
-    
-    local bodyX		= textbox.body.x
-    local bodyY		= textbox.body.y
-    local bodyW		= textbox.body.w
-    local bodyH		= textbox.body.h
-
-    if textbox.visible == true then
-        --Draw the textbox border
-        love.graphics.setColor(textboxBorderColor)
-        love.graphics.rectangle(textboxDrawMode, borderX, borderY, borderW, borderH, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
-        --Draw the textbox body
-        love.graphics.setColor(textboxBodyColor)
-        love.graphics.rectangle(textboxDrawMode, bodyX, bodyY, bodyW, bodyH, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
-    end
-end
-
 
 function buildAlertBox(text)
 	local textMargin		= 4
@@ -96,7 +75,7 @@ end
 
 function love.draw()
 	love.graphics.setCanvas(canvas) --This sets the draw target to the canvas
-	drawAlertBox(textbox)
+	drawWindow(textbox)
 	love.graphics.setColor(textColor)
 	love.graphics.print(testText, (textbox.border.x + 4), (textbox.border.y + 4))
 	love.graphics.setCanvas()

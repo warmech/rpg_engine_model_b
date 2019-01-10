@@ -1,26 +1,4 @@
-function buildTextbox(xPos, yPos, width, height)
-    local textbox = 
-    {
-        visible = false,
-        border = 
-        {
-            x = xPos,
-            y = yPos,
-            w = width,
-            h = height
-        },
-        body = 
-        {
-            x = (xPos + 1),
-            y = (yPos + 1),
-            w = (width - 2),
-            h = (height - 2)
-        }
-    }
-    return textbox
-end
-
-function buildTextArea(text, xPos, yPos, width, lines)
+function buildTextbox(text, xPos, yPos, width, lines)
     width = width - textAreaMargin
     local maxWidth, textTable = love.graphics.getFont():getWrap(text, width)
     local areaBuffer = {}
@@ -48,32 +26,7 @@ function buildTextArea(text, xPos, yPos, width, lines)
     return textArea
 end
 
-function drawTextbox(textboxNumber)
-    local borderX = textObjectList[textboxNumber].textbox.border.x
-    local borderY = textObjectList[textboxNumber].textbox.border.y
-    local borderW = textObjectList[textboxNumber].textbox.border.w
-    local borderH = textObjectList[textboxNumber].textbox.border.h
-    
-    local bodyX = textObjectList[textboxNumber].textbox.body.x
-    local bodyY = textObjectList[textboxNumber].textbox.body.y
-    local bodyW = textObjectList[textboxNumber].textbox.body.w
-    local bodyH = textObjectList[textboxNumber].textbox.body.h
-
-    if textObjectList[textboxNumber].textbox.visible == true then
-        --Set the draw target to the canvas
-        --love.graphics.setCanvas(canvas)
-        --Draw the textbox border
-        love.graphics.setColor(textboxBorderColor)
-        love.graphics.rectangle(textboxDrawMode, borderX, borderY, borderW, borderH, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
-        --Draw the textbox body
-        love.graphics.setColor(textboxBodyColor)
-        love.graphics.rectangle(textboxDrawMode, bodyX, bodyY, bodyW, bodyH, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
-        --Set the draw target back to the screen
-        --love.graphics.setCanvas()
-    end
-end
-
-function drawTextArea(textAreaNumber)
+function drawTextbox(textAreaNumber)
     --Set the draw target to the canvas
     love.graphics.setCanvas(canvas)
     love.graphics.setColor(textColor)
@@ -83,22 +36,6 @@ function drawTextArea(textAreaNumber)
     end
     --Set the draw target back to the screen
     love.graphics.setCanvas()
-end
-
-function eraseTextbox(id)
-    for i = 1, (#textboxList) do
-        if (textboxList[i].id == id) then
-            textboxList[i].visible = false
-        end
-    end
-end
-
-function deleteTextbox(id)
-    for i = 1, (#textboxList) do
-        if (textboxList[i].id == id) then
-            table.remove(textboxList, textboxList[i])
-        end
-    end
 end
 
 function drawContinueBlinker(textboxNumber)
