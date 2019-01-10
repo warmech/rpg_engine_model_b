@@ -69,34 +69,6 @@ function initUI()
 	--Define text processing settings
 	textTimePassed = 0
 	textTimePerLetter = 0.05
-	--Define static textbox properties - this is where dialogue, story, etc. is printed
-	textboxParams = 
-	{
-		narration = 
-		{
-			xPos = 80,
-			yPos = 202,
-			width = 160,
-			height = 38,
-			maxLines = 3
-		},
-		dialogue = 
-		{
-			xPos = 40,
-			yPos = 202,
-			width = 240,
-			height = 38,
-			maxLines = 2
-		},
-		notification = 
-		{
-			xPos = 80,
-			yPos = 112,
-			width = 160,
-			height = 16,
-			maxLines = 1
-		}
-	}
 
 end
 

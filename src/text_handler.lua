@@ -2,8 +2,6 @@ function buildTextbox(xPos, yPos, width, height)
     local textbox = 
     {
         visible = false,
-        blinkerStatus = 0,
-        blinkerFrame = 1,
         border = 
         {
             x = xPos,
@@ -17,42 +15,7 @@ function buildTextbox(xPos, yPos, width, height)
             y = (yPos + 1),
             w = (width - 2),
             h = (height - 2)
-        },
-        blinker = 
-        {
-            {
-                --Outer border
-                x1 = (xPos + width) - 8,
-                y1 = (yPos + height) - 4,
-                x2 = (xPos + width) - 4,
-                y2 = (yPos + height),
-                x3 = (xPos + width),
-                y3 = (yPos + height) - 4,
-                --Inner fill
-                x4 = (xPos + width) - 7,
-                y4 = (yPos + height) - 4,
-                x5 = (xPos + width) - 4,
-                y5 = (yPos + height) - 1,
-                x6 = (xPos + width) - 1,
-                y6 = (yPos + height) - 4
-            },
-            {
-                --Outer border
-                x1 = (xPos + width) - 7,
-                y1 = (yPos + height) - 4,
-                x2 = (xPos + width) - 4,
-                y2 = (yPos + height) - 1,
-                x3 = (xPos + width) - 1,
-                y3 = (yPos + height) - 4,
-                --Inner fill
-                x4 = (xPos + width) - 6,
-                y4 = (yPos + height) - 4,
-                x5 = (xPos + width) - 4,
-                y5 = (yPos + height) - 2,
-                x6 = (xPos + width) - 2,
-                y6 = (yPos + height) - 4
-            }
-        }      
+        }
     }
     return textbox
 end
