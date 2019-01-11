@@ -25,16 +25,17 @@ function drawWindow(window)
 		--Set the draw target to the canvas
 		--love.graphics.setCanvas(canvas)
 		--Draw the textbox border
-		love.graphics.setColor(textboxBorderColor)
-		love.graphics.rectangle(textboxDrawMode, window.border.x, window.border.y, window.border.w, window.border.h, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
+		love.graphics.setColor(windowBorderColor)
+		love.graphics.rectangle(windowDrawMode, window.border.x, window.border.y, window.border.w, window.border.h, windowCornerRadius, windowCornerRadius, windowCornerSegments)
 		--Draw the textbox body
-		love.graphics.setColor(textboxBodyColor)
-		love.graphics.rectangle(textboxDrawMode, window.body.x, window.body.y, window.body.w, window.body.h, textboxCornerRadius, textboxCornerRadius, textboxCornerSegments)
+		love.graphics.setColor(windowBodyColor)
+		love.graphics.rectangle(windowDrawMode, window.body.x, window.body.y, window.body.w, window.body.h, windowCornerRadius, windowCornerRadius, windowCornerSegments)
 		--Set the draw target back to the screen
 		--love.graphics.setCanvas()
 	end
 end
 
-function handleUI()
-
+function drawPortrait(character, portraitWindow)
+	local portrait = love.graphics.newImage(character.portrait)
+	love.graphics.draw(portrait, (portraitWindow.border.x + windowMargin), (portraitWindow.border.y + windowMargin))
 end
