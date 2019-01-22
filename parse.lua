@@ -2,7 +2,33 @@
 
 
 
-
+function buildTextbox(text, xPos, yPos, width, lines)
+	width = width - textAreaMargin
+	local maxWidth, textTable = love.graphics.getFont():getWrap(text, width)
+	local areaBuffer = {}
+	
+	for i = 1, lines do
+		table.insert(areaBuffer, "")
+	end
+	
+	if (#textTable < lines) then
+		lines = #textTable
+	end
+	
+	local textArea = 
+	{
+		x = xPos + textAreaMargin,
+		y = yPos + textAreaMargin,
+		textTable = textTable,
+		areaBuffer = areaBuffer,
+		qtyLines = (#textTable),
+		maxLines = lines,
+		currentLetter = 1,
+		currentLine = 1,
+		holdFlag = false
+	}
+	return textArea
+end
 
 
 
@@ -22,6 +48,71 @@ function processText(text)
 end
 
 processText(text)
+
+
+
+switch = function (choice)
+	-- accepts both number as well as string
+	choice = choice and tonumber(choice) or choice     -- returns a number if the choic is a number or string. 
+
+	-- Define your cases
+	case =
+	 {
+		 [1] = function ( )                              -- case 1 : 
+						 print("your choice is Number 1 ")       -- code block
+		 end,                                            -- break statement
+
+		 add = function ( )                              -- case 'add' : 
+						 print("your choice is string add ")     -- code block
+		 end,                                            -- break statement
+
+		['+'] = function ( )                             -- case '+' : 
+						 print("your choice is char + ")         -- code block
+		 end,                                            -- break statement
+
+		 default = function ( )                          -- default case
+						 print(" your choice is din't match any of those specified cases")   
+		 end,                                            -- u cant exclude end hear :-P
+	 }
+
+	-- execution section
+	if case[choice] then
+		 case[choice]()
+	else
+		 case["default"]()
+	end
+
+end
+
+
+
+
+
+
+
+--[[
+
+<b> - line break
+<p> - slight pause
+<c> - prompt to continue
+<s> - clear window
+
+Take text formatted like this: "Hello World!<b>I am a text window<p>.<p>.<p>.<c><s>Or am I?"
+
+And have it appear like this:
+
+Hello World!
+I am a text window...
+-------
+Or am I?
+
+
+
+1. parse text into table
+2. 
+
+]]
+
 
 
 --[[

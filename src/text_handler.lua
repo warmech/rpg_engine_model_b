@@ -1,6 +1,20 @@
 
 
+function init_textTable()
+    textArea =
+    {
+        {},
+        {},
+        {},
+        {}
+    }
+    for i = 1, 4 do
+        for i = 1, 30 do
+               
+        end
+    end
 
+end
 
 
 
