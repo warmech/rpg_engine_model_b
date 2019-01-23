@@ -57,18 +57,37 @@ function initUI()
 	--Initialize the text object table
 	textObjectList = {}
 	--Define textbox settings
-	textboxDrawMode = "fill"
-	textAreaMargin = 4 --Measured in pixels	
+	windowDrawMode = "fill"
+	windowMargin = 4 --Measured in pixels	
 	lineSpacing = 2 --Measured in pixels
-	texboxBorderSize = 2 --Measured in pixels
-	textboxCornerRadius = 2 --Measured in pixels
-	textboxCornerSegments = 1 --Measured in pixels
-	textboxBorderColor = color.white
-	textboxBodyColor = color.blue
+	windowBorderSize = 2 --Measured in pixels
+	windowCornerRadius = 2 --Measured in pixels
+	windowCornerSegments = 1 --Measured in pixels
+	windowBorderColor = color.white
+	windowBodyColor = color.blue
 	textColor = color.white
 	--Define text processing settings
 	textTimePassed = 0
 	textTimePerLetter = 0.05
+	window = 
+	{
+		textbox = 
+		{
+			xPos = 46,
+			yPos = 194,
+			width = 274,
+			height = 46	
+		},
+		portrait = 
+		{
+			xPos = 0,
+			yPos = 194,
+			width = 46,
+			height = 46
+		}
+	}
+	--Define character portrait path
+	portraitPath = "portraits/"
 
 end
 

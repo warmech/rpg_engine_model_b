@@ -34,7 +34,7 @@ function buildAlertBox(text)
 	local xText				= xTextbox + textMargin
 	local yText				= yTextbox + textMargin
 	
-	textbox = buildTextbox(xTextbox, yTextbox, textboxWidth, textboxHeight)
+	textbox = buildWindow(xTextbox, yTextbox, textboxWidth, textboxHeight)
 	textbox.visible = true
 end
 
@@ -49,10 +49,20 @@ function love.load()
     initGraphics()
     initUI()
 	
+	textbox = {}
 	testText = "You are a stupid idiot. I mean, just the worst."
 	buildAlertBox(testText)
     
-    
+    textbox_1 = buildWindow(window.textbox.xPos, window.textbox.yPos, window.textbox.width, window.textbox.height)
+	portrait_1 = buildWindow(window.portrait.xPos, window.portrait.yPos, window.portrait.width, window.portrait.height)
+	
+	textbox_1.visible = true
+	portrait_1.visible = true
+	
+	character_1 = 
+	{
+		portrait = UIGraphicsPath..portraitPath.."locke.png"
+	}
 end
 
 function love.keypressed(key)
@@ -76,8 +86,16 @@ end
 function love.draw()
 	love.graphics.setCanvas(canvas) --This sets the draw target to the canvas
 	drawWindow(textbox)
-	love.graphics.setColor(textColor)
+	--love.graphics.setColor(textColor)
+	love.graphics.setColor(color.yellow)
 	love.graphics.print(testText, (textbox.border.x + 4), (textbox.border.y + 4))
+	
+	drawWindow(textbox_1)
+	drawWindow(portrait_1)
+	
+	love.graphics.setColor(color.white)
+	drawPortrait(character_1, portrait_1)
+	
 	love.graphics.setCanvas()
 
     --love.graphics.setCanvas(canvas) --This sets the draw target to the canvas

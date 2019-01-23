@@ -1,3 +1,25 @@
+
+
+function init_textTable()
+    textArea =
+    {
+        {},
+        {},
+        {},
+        {}
+    }
+    for i = 1, 4 do
+        for i = 1, 30 do
+               
+        end
+    end
+
+end
+
+
+
+--[[
+
 function buildTextbox(text, xPos, yPos, width, lines)
     width = width - textAreaMargin
     local maxWidth, textTable = love.graphics.getFont():getWrap(text, width)
@@ -56,6 +78,8 @@ function drawContinueBlinker(textboxNumber)
     end
 end
 
+]]
+
 function selectFont(fontPath, fontName, fontDefinition, fontHeight)
     local font = love.graphics.newImageFont(fontPath..fontName,fontDefinition)
     love.graphics.setFont(font)
@@ -63,6 +87,7 @@ function selectFont(fontPath, fontName, fontDefinition, fontHeight)
     return
 end
 
+--[[
 function advanceText(deltaTime)
     --Update text timer
     textTimePassed = textTimePassed + deltaTime
@@ -96,7 +121,7 @@ function advanceText(deltaTime)
                     textTableCurrentLetter = string.sub(textObjectList[i].textArea.textTable[textObjectList[i].textArea.currentLine], textObjectList[i].textArea.currentLetter, textObjectList[i].textArea.currentLetter)
                     areaBufferCurrentLine = textObjectList[i].textArea.areaBuffer[textObjectList[i].textArea.currentLine]
                     
-                    --[[
+                    
                     print("Current Line: "..currentLine)
                     print("Current Letter: "..currentLetter)
                     print("Max Lines: "..maxLines)
@@ -104,7 +129,7 @@ function advanceText(deltaTime)
                     print("Text Table - Current Letter: ",textTableCurrentLetter)
                     print("Area Buffer - Current Line: ",areaBufferCurrentLine)
                     print("Hold Flag: ",holdFlag)
-                    ]]
+                    
 
                 
                 
@@ -186,3 +211,4 @@ function handleText() --This function is called every update cycle and manages a
 end
 
 
+]]
