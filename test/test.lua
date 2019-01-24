@@ -13,6 +13,8 @@ function split(str, max_line_length)
 	local line
 	str:gsub('(%s*)(%S+)', 
 		function(spc, word) 
+			print("SPACE: |"..spc.."|")
+			print("WORD : "..word)
 			if not line or #line + #spc + #word > max_line_length then
 				table.insert(lines, line)
 				line = word
