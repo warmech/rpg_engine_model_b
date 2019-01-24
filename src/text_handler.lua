@@ -1,20 +1,77 @@
+--The below function will take as its input a string and a maximum row width; with these parameters, it will build individual lines of text no longer than the provided maximum width and insert them into a table (which is returned) for further manipulation. This function can be executed in a much simpler (and arguably much more efficient) fashion by using the function that immediately proceeds it. I have cobbled together this slapdash affair in an attempt to better undertand how the efficient function produces the output that it does. The below function can certainly be improved, and I look forward to doing so in the future - along with everything else in this stupid game engine.
+function wrapText(text, maxLength)
 
+    local charCounter		= 1
+    local max_line_length	= maxLength
+    local textLength		= text:len()
+    local spc				= ""
+    local word				= ""
+    local line				= ""
+    local textLines			= {}
+    local currentChar		= text:sub(charCounter, charCounter)
 
-function init_textTable()
-    textArea =
-    {
-        {},
-        {},
-        {},
-        {}
-    }
-    for i = 1, 4 do
-        for i = 1, 30 do
-               
+    while (charCounter <= textLength) do
+        --Spell word if not presently on a space
+        while (currentChar ~= " ") and (charCounter <= textLength) do
+            word = word..currentChar
+            charCounter = charCounter + 1
+            currentChar = text:sub(charCounter, charCounter)
+        end
+        --Concatenate consecutive spaces
+        while (currentChar == " ") and (charCounter <= textLength) do
+            spc = spc.." "
+            charCounter = charCounter + 1
+            currentChar = text:sub(charCounter, charCounter)
+        end
+        --If current line is longer than the maximum length, write to the table
+        if (#line + #spc + #word > max_line_length) then
+            table.insert(textLines, line)
+            line = word
+            word = ""
+            spc = ""
+        --If parser has reached the end of the given text, write remaining data to the table
+        elseif (textLength == charCounter - 1) then
+            line = line.." "..word
+            table.insert(textLines, line)
+        --If the parser has finished reading the first word, initialize the first line
+        elseif (line == "") then
+            line = word
+            word = ""
+            spc = ""
+        --Concatenate current word to line
+        else
+            line = line..spc..word
+            word = ""
+            spc = ""
+        end
+        --If the parser has reached the end of the given text and the final word was too long for the previous line, write the final line to the table
+        if (textLength == charCounter - 1) and (word == "") then
+            table.insert(textLines, line)
         end
     end
-
+    
+    return textLines
 end
+
+
+function split(str, max_line_length)
+    local lines = {}
+    local line
+    str:gsub('(%s*)(%S+)', 
+        function(spc, word) 
+            if not line or #line + #spc + #word > max_line_length then
+                table.insert(lines, line)
+                line = word
+            else
+                line = line..spc..word
+            end
+        end
+    )
+    table.insert(lines, line)
+    return lines
+end
+
+
 
 
 

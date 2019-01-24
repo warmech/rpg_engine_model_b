@@ -1,69 +1,75 @@
+function wrapText(text, maxLength)
+
+	local charCounter		= 1
+	local max_line_length	= maxLength
+	local textLength		= text:len()
+	local spc				= ""
+	local word				= ""
+	local line				= ""
+	local textLines			= {}
+	local currentChar		= text:sub(charCounter, charCounter)
+
+	while (charCounter <= textLength) do
+		--Spell word if not presently on a space
+		while (currentChar ~= " ") and (charCounter <= textLength) do
+			word = word..currentChar
+			charCounter = charCounter + 1
+			currentChar = text:sub(charCounter, charCounter)
+		end
+		--Concatenate consecutive spaces
+		while (currentChar == " ") and (charCounter <= textLength) do
+			spc = spc.." "
+			charCounter = charCounter + 1
+			currentChar = text:sub(charCounter, charCounter)
+		end
+		--If current line is longer than the maximum length, write to the table
+		if (#line + #spc + #word > max_line_length) then
+			table.insert(textLines, line)
+			line = word
+			word = ""
+			spc = ""
+		--If parser has reached the end of the given text, write remaining data to the table
+		elseif (textLength == charCounter - 1) then
+			line = line.." "..word
+			table.insert(textLines, line)
+		--If the parser has finished reading the first word, initialize the first line
+		elseif (line == "") then
+			line = word
+			word = ""
+			spc = ""
+		--Concatenate current word to line
+		else
+			line = line..spc..word
+			word = ""
+			spc = ""
+		end
+		--If the parser has reached the end of the given text and the final word was too long for the previous line, write the final line to the table
+		if (textLength == charCounter - 1) and (word == "") then
+			table.insert(textLines, line)
+		end
+	end
+	
+	return textLines
+end
+
 text1 = "Hello World! This is a test of the text window parser."
 text2 = "Whatever you do, make sure there is a line breaking size of word at column 30! Also, make this text go long..."
 text3 = "This is a test."
 text4 = "AAAAAAAAAAAAAAAAAAAA BBBBBBBB CCCCCCCCCCCCC DDDD EEEEEEEEEEEEEEEEE FFFFFFFFFFFFFFFFFFFF"
 
-text = text3
 
+textTable = wrapText(text2, 30)
 
-
-charCounter		= 1
-wordSize		= 1
-max_line_length	= 30
-textLength		= text:len()
-textBuffer		= ""
-spc				= ""
-word			= ""
-line			= ""
-textLines		= {}
-
---print(textLength)
-
-while (charCounter <= textLength) do
-	for i = 1, textLength do
-		--Define current character
-		currentChar = text:sub(charCounter, charCounter)
-		--If current character is not a space, build the current word
-		if (currentChar ~= " ") then
-			word = word..currentChar
-			wordSize = wordSize + 1
-		--If a space is encountered
-		elseif (currentChar == " ") then
-			print(wordSize - 1)
-			spc = spc.." "
-			wordSize = 1
-			--Define next character
-			nextChar = text:sub(charCounter + wordSize, charCounter + wordSize)
-			--count the number of characters until the next space
-			if (nextChar ~= " ") then
-				if ((charCounter + wordSize) <= textLength) then
-					wordSize = wordSize + 1
-				end
-				spc = ""
-			else
-				
-			end
-		else
-			print()
-		end	
-		charCounter = charCounter + 1
+for i = 1, #textTable do
+	line = "|"
+	for j = 1, #textTable[i] do
+		line = line..string.sub(textTable[i], j, j).."|"
 	end
-end
-
---This is a test.
-
---[[
-if (not line) or (#line + #spc + #word > max_line_length) then
-	table.insert(textLines, line)
-	line = word
-else
-	line = line..spc..word
 	print(line)
 end
-]]
+
 
 --[[
-
 function split(str, max_line_length)
 	local lines = {}
 	local line
@@ -80,74 +86,9 @@ function split(str, max_line_length)
 	table.insert(lines, line)
 	return lines
 end
-
-
-function wordWrap(string, max_line_length)
-
-	local lines = {}
-	local line
-	
-	
-		if (not line) or (#line + #spc + #word) > max_line_length then
-			table.insert(lines, line)
-			line = word
-		else
-			line = line..spc..word
-		end
-
-
-
-
-
-end
-
-for _, line in ipairs(wordWrap(text, 30)) do
-	print(line)
-end
-
-
 ]]
 
---[[
 
-while (charCounter <= textLength) do
-	for i = 1, textLength do
-		--Define current character
-		currentChar = text:sub(charCounter, charCounter)
-		if (currentChar ~= " ") then
-			word = word..currentChar
-			wordSize = wordSize + 1
-		else
-		
-		--If a space is encountered...
-		if (currentChar == " ") then
-			spc = spc.." "
-			wordSize = 1
-			--Define next character
-			nextChar = text:sub(charCounter + wordSize, charCounter + wordSize)
-			--count the number of characters until the next space
-			if (nextChar == " ") then
-				--spc = spc.." "
-			else
-				while ((charCounter + wordSize) <= textLength) do
-					if ((charCounter + wordSize) <= textLength) then
-						wordSize = wordSize + 1
-					end
-				end
-				print("|"..spc.."|")
-				spc = ""
-				textBuffer = textBuffer..spc
-				wordSize = 1
-			end
-			--print("|"..spc.."|")
-		else
-			word = word..currentChar
-			wordSize = wordSize + 1
-			print(word)
-		end	
-		--print(wordSize)
-		charCounter = charCounter + 1
-	end
-end
 
-]]
+
+
